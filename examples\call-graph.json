@@ -1,0 +1,68 @@
+{
+  "schema": "orbit.call-graph.v0.1",
+  "callId": "demo-call-001",
+  "clock": { "unit": "milliseconds", "origin": "call_audio_start", "alignmentVersion": "1" },
+  "events": [
+    {
+      "schema": "orbit.call-event.v0.1",
+      "id": "evt-1",
+      "type": "speech_segment",
+      "startMs": 0,
+      "endMs": 1800,
+      "speaker": "human",
+      "value": { "transcript": "My order number is 5841", "transcriptConfidence": 0.91 },
+      "unit": null,
+      "confidence": 0.94,
+      "source": "example-segmenter",
+      "provenance": { "kind": "model_estimate", "version": "0.1", "model": "example-only", "limitations": ["Synthetic illustration; not an evaluated model output"] },
+      "evidenceEventIds": [],
+      "mediaSpan": { "trackId": "human-track", "startMs": 0, "endMs": 1800 }
+    },
+    {
+      "schema": "orbit.call-event.v0.1",
+      "id": "evt-2",
+      "type": "audio_condition",
+      "startMs": 0,
+      "endMs": 5000,
+      "speaker": "human",
+      "value": 0.78,
+      "unit": "score_0_1",
+      "confidence": 0.7,
+      "source": "example-audio-evaluator",
+      "provenance": { "kind": "model_estimate", "version": "0.1", "model": "example-only", "limitations": ["Illustrative value only", "Not a calibrated risk probability"] },
+      "evidenceEventIds": ["evt-1"],
+      "mediaSpan": { "trackId": "human-track", "startMs": 0, "endMs": 5000 }
+    },
+    {
+      "schema": "orbit.call-event.v0.1",
+      "id": "evt-3",
+      "type": "agent_action",
+      "startMs": 1900,
+      "endMs": null,
+      "speaker": "agent",
+      "value": { "action": "confirm_critical_detail", "policyVersion": "demo-0.1", "accepted": true },
+      "unit": null,
+      "confidence": 1,
+      "source": "example-agent-policy",
+      "provenance": { "kind": "agent_policy", "version": "demo-0.1", "limitations": ["Illustrative action; does not imply validated benefit"] },
+      "evidenceEventIds": ["evt-1", "evt-2"],
+      "mediaSpan": null
+    },
+    {
+      "schema": "orbit.call-event.v0.1",
+      "id": "evt-4",
+      "type": "outcome",
+      "startMs": 2200,
+      "endMs": 3000,
+      "speaker": "human",
+      "value": { "confirmedDetail": true, "taskSucceeded": true, "labelSource": "synthetic-example" },
+      "unit": null,
+      "confidence": 1,
+      "source": "example-labeler",
+      "provenance": { "kind": "business_outcome", "version": "0.1", "limitations": ["Synthetic illustration; not a baseline result"] },
+      "evidenceEventIds": ["evt-3"],
+      "mediaSpan": null
+    }
+  ]
+}
+
