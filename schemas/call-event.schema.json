@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ayuchsaxena/orbit-voice-eval/blob/main/schemas/call-event.schema.json",
+  "title": "Orbit temporal call event",
+  "description": "A provenance-bearing event on a shared call timeline. Audio payloads remain external; events may reference media spans.",
+  "type": "object",
+  "required": ["schema", "id", "type", "startMs", "source", "confidence", "provenance"],
+  "properties": {
+    "schema": { "const": "orbit.call-event.v0.1" },
+    "id": { "type": "string", "minLength": 1 },
+    "type": { "enum": ["speech_segment", "pause", "silence", "overlap", "barge_in", "transcript_annotation", "audio_condition", "transport_event", "agent_action", "repair", "confirmation", "outcome"] },
+    "startMs": { "type": "number", "minimum": 0 },
+    "endMs": { "type": ["number", "null"], "minimum": 0 },
+    "speaker": { "enum": ["human", "agent", "other", "unknown", null] },
+    "value": {},
+    "unit": { "type": ["string", "null"] },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "source": { "type": "string", "minLength": 1 },
+    "provenance": {
+      "type": "object",
+      "required": ["kind", "version"],
+      "properties": {
+        "kind": { "enum": ["signal_measurement", "model_estimate", "transcript", "human_annotation", "provider_telemetry", "agent_policy", "business_outcome"] },
+        "version": { "type": "string" },
+        "model": { "type": ["string", "null"] },
+        "limitations": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "evidenceEventIds": { "type": "array", "items": { "type": "string" } },
+    "mediaSpan": {
+      "type": ["object", "null"],
+      "properties": { "trackId": { "type": "string" }, "startMs": { "type": "number" }, "endMs": { "type": "number" } },
+      "required": ["trackId", "startMs", "endMs"],
+      "additionalProperties": false
+    }
+  },
+  "allOf": [{ "if": { "properties": { "type": { "const": "audio_condition" } } }, "then": { "required": ["value", "unit", "endMs"] } }],
+  "additionalProperties": false
+}
+
