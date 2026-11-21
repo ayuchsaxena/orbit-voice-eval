@@ -4,6 +4,16 @@
 
 Orbit is an early, community-built project for evaluating the audio and speech quality of voice agents, identifying likely failure conditions, and giving agents useful signals during a call. It combines an evidence-based conversation evaluator, an optional audio-analysis worker, a production baseline protocol, and a path for model adapters and safe interventions.
 
+## Why Orbit
+
+**Most agent-to-agent voice tests ask whether an agent can handle a simulated caller. Orbit is designed to answer what happened in real production calls, when it happened, and whether a change improved the outcome.**
+
+Agent-to-agent testing is valuable: it creates repeatable spoken scenarios, exercises the full audio path, and makes it practical to compare agent versions at scale. Orbit complements that work by making the **production call** the baseline. It represents each call as a temporal speech graph: a time-aligned record of speech, pauses, overlap, audio conditions, transport evidence, agent actions, and outcomes. Transcript text can be attached as one evidence source; it is not the whole record.
+
+That graph gives Orbit a route from **signal → agent response → observed outcome**. The goal is to find which moments and conditions accompany real failures, give the agent a timely, evidence-backed cue, and measure whether the response helps against the production baseline. Simulated callers and synthetic audio remain useful for controlled stress tests and repeatable regression tests; they do not replace validation on held-out production calls.
+
+Orbit is early, so this is a design thesis, not a claim of proven superiority or better benchmark scores. The public project exposes the event model, evaluation interfaces, and validation principles. It does not include customer call data, production thresholds, or any private scoring and intervention policy. See [Why Orbit](docs/why-orbit.md) for the comparison and limits.
+
 > **Status: experimental.** The included evaluator is a post-call research baseline. It is not a calibrated failure predictor, and it does not yet make live interventions. Do not use its provisional behavior labels as facts about a person. Live adaptation and risk thresholds require validation against real outcomes.
 
 ## What is here
