@@ -1,0 +1,13 @@
+{
+  "name": "orbit-voice-evaluation",
+  "private": true,
+  "description": "Open tools for measuring and improving voice-agent quality",
+  "workspaces": ["packages/evaluator"],
+  "scripts": {
+    "build": "npm run build -w @orbit/evaluator"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
+
